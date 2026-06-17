@@ -8,12 +8,13 @@ RUN npm run build
 FROM node:lts-alpine AS runner
 WORKDIR /usr/src/app
 ENV NODE_ENV=production
+ENV PORT=3003
 COPY --from=builder /usr/src/app/package.json ./
 COPY --from=builder /usr/src/app/.next ./.next
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY --from=builder /usr/src/app/public ./public
 COPY --from=builder /usr/src/app/next.config.mjs ./
-EXPOSE 3000
+EXPOSE 3003
 RUN chown -R node /usr/src/app
 USER node
 CMD ["npm", "start"]
